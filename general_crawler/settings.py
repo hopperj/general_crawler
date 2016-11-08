@@ -2,7 +2,7 @@
 # @Date:   2016-11-01
 # @Email:  jason.t.hopper@gmail.com
 # @Last modified by:   hopperj
-# @Last modified time: 2016-11-02
+# @Last modified time: 2016-11-03
 # @License: GPL3
 
 
@@ -36,7 +36,7 @@ MONGODB_DB = "generalCrawler"
 MONGODB_COLLECTION = "pages"
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-# CONCURRENT_REQUESTS = 32
+CONCURRENT_REQUESTS = 100
 
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
@@ -60,9 +60,10 @@ MONGODB_COLLECTION = "pages"
 
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
-#    'general_crawler.middlewares.MyCustomSpiderMiddleware': 543,
-#}
+SPIDER_MIDDLEWARES = {
+    'general_crawler.middlewares.IgnoreDuplicates': 543,
+   # 'general_crawler.middlewares.MyCustomSpiderMiddleware': 543,
+}
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html

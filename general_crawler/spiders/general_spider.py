@@ -2,7 +2,7 @@
 # @Date:   2016-05-09
 # @Email:  jason.t.hopper@gmail.com
 # @Last modified by:   hopperj
-# @Last modified time: 2016-11-02
+# @Last modified time: 2016-11-03
 # @License: GPL3
 
 
@@ -23,21 +23,36 @@ from scrapy.http import HtmlResponse
 from general_crawler.items import GeneralCrawlerItem
 
 import json
-from bs4 import BeautifulSoup
 
 import lxml.etree
 import lxml.html
 
 
 # BASE_URL = 'http://localhost/'
+banned_domains = [
+    'wikipedia',
+]
 
+def check_url(url):
+    for u in banned_domains:
+        if u in url:
+            print('ignoring ',url)
+            return False
+    return True
 
 class GeneralSpider(CrawlSpider):
     name = "general_spider"
-    allowed_domains = ["afrg.peas.dal.ca"] # ["localhost"]
-    start_urls = (
-        'http://afrg.peas.dal.ca/',#'localhost/index.html'
-    )
+
+
+
+    urls = [ url.strip() for url in open('/Users/hopperj/work/hyperionGray/general_crawler/general_crawler/alexa.txt').readlines() if check_url(url) ]
+
+    allowed_domains = urls#["afrg.peas.dal.ca"] # ["localhost"]
+    # start_urls = (
+    #     'http://afrg.peas.dal.ca/',#'localhost/index.html'
+    # )
+
+    start_urls = [ 'http://'+url for url in urls ]
 
     rules = (
         Rule(LinkExtractor( allow=('//')), callback="parse_items", follow= True),
@@ -62,5 +77,5 @@ class GeneralSpider(CrawlSpider):
         except:
             pass
         item['html_body'] = response.body#.decode('utf-16')
-        print('done parse_items')
+        # print('done parse_items')
         return item

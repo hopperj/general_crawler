@@ -2,7 +2,7 @@
 # @Date:   2016-11-01
 # @Email:  hopperj@ampereinnotech.com
 # @Last modified by:   hopperj
-# @Last modified time: 2016-11-02
+# @Last modified time: 2016-11-03
 # @License: GPL3
 
 
@@ -32,8 +32,8 @@ class GeneralCrawlerPipeline(object):
         db = connection[settings['MONGODB_DB']]
         self.collection = db[settings['MONGODB_COLLECTION']]
 
-        self.collection.remove( {  } )
-        print("Mongo all set up!")
+        # self.collection.remove( {  } )
+        # print("Mongo all set up!")
         # self.connection = sqlite3.connect('frank.db')
         # self.cursor = self.connection.cursor()
 
